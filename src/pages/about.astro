@@ -1,9 +1,5 @@
 ---
-import PostCard from '../components/PostCard.astro';
-import PostGrid from '../components/PostGrid.astro';
 import Layout from '../layouts/Layout.astro';
-const res = await fetch("http://astro.local/wp-json/wp/v2/posts?_embed")
-const posts = await res.json()
 ---
 
 <Layout title="Random Ramblings">
@@ -12,20 +8,6 @@ const posts = await res.json()
 		<p>
 			Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio qui doloribus, veritatis ipsum harum dolorem sequi repellendus. Laudantium quae error eos! Voluptas repudiandae officia quo corrupti recusandae inventore laborum unde. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veritatis nisi in nostrum. Perferendis suscipit commodi tenetur inventore quae, odit ex alias blanditiis possimus? Repellat reprehenderit odio dolorum animi voluptatum.
 		</p>
-		<h2>Recent Ramblings</h2>
-		<PostGrid>
-		{
-			posts.map((post) => (
-				<PostCard
-					title={post.title.rendered}
-					image= {post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url}
-					slug={post.slug}
-					/>
-			))
-		}
-		</PostGrid>
-
-		
 	</main>
 </Layout>
 

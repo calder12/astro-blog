@@ -9,10 +9,6 @@ const posts = await res.json()
 <Layout title="Random Ramblings">
 	<main style="flex:1">
 		<h1>Random Ramblings</h1>
-		<p>
-			Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio qui doloribus, veritatis ipsum harum dolorem sequi repellendus. Laudantium quae error eos! Voluptas repudiandae officia quo corrupti recusandae inventore laborum unde. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veritatis nisi in nostrum. Perferendis suscipit commodi tenetur inventore quae, odit ex alias blanditiis possimus? Repellat reprehenderit odio dolorum animi voluptatum.
-		</p>
-		<h2>Recent Ramblings</h2>
 		<PostGrid>
 		{
 			posts.map((post) => (

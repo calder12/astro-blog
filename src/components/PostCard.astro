@@ -1,0 +1,25 @@
+---
+const {title, image, slug} = Astro.props
+---
+
+<div class="card">
+  <img src={image} />
+  <a href={`/posts/${slug}/`}>
+    <h3>{title}</h3>
+  </a>
+</div>
+
+<style>
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 5px;
+  }
+  img {
+    max-width: 100%;
+  }
+  h3 {
+    margin-top: 0;
+    font-size: 1.25rem;
+  }
+</style>

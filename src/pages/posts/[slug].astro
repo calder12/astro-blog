@@ -1,0 +1,84 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const { slug } = Astro.params;
+
+let res = await fetch(`http://astro.local/wp-json/wp/v2/posts?_embed&slug=${slug}?`);
+let [post] = await res.json();
+
+// The getStaticPaths() is required for static Astro sites.
+// If using SSR, you will not need this function.
+
+
+let data = await fetch("http://astro.local/wp-json/wp/v2/posts")
+let posts = await data.json();
+
+
+
+export async function getStaticPaths() {
+  let data = await fetch("http://astro.local/wp-json/wp/v2/posts")
+  let posts = await data.json();
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post: post },
+  }));
+}
+---
+<Layout title={post.title.rendered}>
+  <article style="flex: 1;">
+    <img src={post._embedded['wp:featuredmedia'][0].media_details.sizes.large.source_url} />
+    <h3 class="h1" aria-level="1" set:html={post.title.rendered} />
+    <Fragment set:html={post.content.rendered} />
+    {
+      posts.map((post2, index, arr) => {
+        if(post2.slug == post.slug) { 
+          if(typeof arr[index-1] !== 'undefined') {
+            console.log(arr[index-1])
+            return (
+              <div class="pagination">
+                <a href={`/posts/${arr[index-1].slug}`} class="btn">Previous</a>
+                <a href="" class="disabled btn">Next</a>
+              </div>
+            )
+          } else {
+            return (
+              <div class="pagination">
+                <a href="" class="disabled btn">Previous</a>
+                <a href={`/posts/${arr[index+1].slug}`} class="btn">Next</a>
+              </div>
+            )
+          }
+        }
+      })
+    }
+  </article>
+</Layout>
+
+<style>
+  img {
+    max-width: 100%;
+  }
+
+  .btn {
+    border: 1px solid red;
+    border-radius: 10px;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem 2rem;
+    text-decoration:none;
+    font-weight: 700
+  }
+
+  .disabled {
+    pointer-events: none;
+    background: #ddd;
+    border: 1px solid #ccc;
+    color: black;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content:space-between;
+  }
+  </style>
